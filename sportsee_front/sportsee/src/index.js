@@ -1,12 +1,18 @@
+//a remplacer par l'API
+import userData from "./datas/userdata.json";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "../src/styles/index.css";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import NutritionCard from "./components/NutritionCard";
 
-const { USER_MAIN_DATA } = require("./datas/datamocked.js");
-//tout d'abord --> filtrer les données avec l'id x ou y
-//puis --> stocker toutes les données utiles qq part pour les appeler
+//svg import as components
+import { ReactComponent as CalorieIcon } from "./assets/nutritions-icons/calories-icon.svg";
+import { ReactComponent as CarbsIcon } from "./assets/nutritions-icons/carbs-icon.svg";
+import { ReactComponent as FatIcon } from "./assets/nutritions-icons/fat-icon.svg";
+import { ReactComponent as ProteinIcon } from "./assets/nutritions-icons/protein-icon.svg";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +21,32 @@ root.render(
     <div className="nav-and-dashboard">
       <Sidebar />
       <main className="dashboard-container">
-        <h2 className="greeting">Bonjour {}</h2>
+        <h2 className="greetings">
+          Bonjour <span className="greetings-name">{userData.userInfos.firstName}</span>
+        </h2>
+        <h3 className="congrats">
+          Félicitation ! Vous avez explosé vos objectif hier 👏
+        </h3>
+        <div className="data-visuals-container">
+          <div className="graphs-container">
+            <div className="charts-container"></div>
+            <div className="small-graphs-container"></div>
+          </div>
+          <div className="nutrition-cards-container">
+            <NutritionCard value={userData.keyData.calorieCount} unit="Calories">
+              <CalorieIcon />
+            </NutritionCard>
+            <NutritionCard value={userData.keyData.proteinCount} unit="Protéines">
+              <CarbsIcon />
+            </NutritionCard>
+            <NutritionCard value={userData.keyData.carbohydrateCount} unit="Glucides">
+              <FatIcon />
+            </NutritionCard>
+            <NutritionCard value={userData.keyData.lipidCount} unit="Lipides">
+              <ProteinIcon />
+            </NutritionCard>
+          </div>
+        </div>
       </main>
     </div>
   </React.StrictMode>
