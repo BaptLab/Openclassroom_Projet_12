@@ -1,0 +1,9 @@
+.nutrition-card {
+  display: flex;
+  background-color: #fbfbfb;
+}
+
+.nutritions-infos {
+  display: flex;
+  flex-direction: column;
+}

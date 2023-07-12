@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Roboto;
+  min-width: 1024px;
+  min-height: 780px;
+  padding: 0;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+  list-style: none;
+  font-size: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  font-weight: inherit;
+}
+
+input {
+  all: inherit;
+}
+
+.nav-and-dashboard {
+  display: flex;
+}
+
+.dashboard-container {
+  height: auto;
+  width: 100%;
+  padding: 68px 90px 88px 109px;
+}
+
+.greetings {
+  font-size: 3em;
+  font-weight: 500;
+}
+
+.greetings-name {
+  color: red;
+}
+
+.congrats {
+  margin-top: 41px;
+  font-size: 1, 125em;
+  font-weight: 400;
+}
+
+.data-visuals-container {
+  display: flex;
+  gap: 30px;
+}
+
+.small-graphs-container {
+  display: flex;
+  gap: 30px;
+}
+
+.nutrition-cards-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 30px;
+}

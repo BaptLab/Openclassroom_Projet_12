@@ -1,0 +1,12 @@
+.sport-icon {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.sport-icon:hover rect {
+  fill: red;
+}
+
+.sport-icon:hover path {
+  fill: white;
+}
