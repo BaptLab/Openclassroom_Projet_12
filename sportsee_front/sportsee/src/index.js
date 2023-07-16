@@ -43,6 +43,7 @@ root.render(
                 <LineChart />
               </GraphBox>
             </div>
+            <div className="small-graphs-container"></div>
           </div>
           <div className="nutrition-cards-container">
             <NutritionCard value={userData.keyData.calorieCount} unit="Calories">
