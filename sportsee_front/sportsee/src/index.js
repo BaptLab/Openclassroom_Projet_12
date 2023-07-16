@@ -15,6 +15,7 @@ import { ReactComponent as FatIcon } from "./assets/nutritions-icons/fat-icon.sv
 import { ReactComponent as ProteinIcon } from "./assets/nutritions-icons/protein-icon.svg";
 import GraphBox from "./components/GraphBox";
 import LineChart from "./components/LineChart";
+import BarChart from "./components/BarChart";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -31,7 +32,9 @@ root.render(
         </h3>
         <div className="data-visuals-container">
           <div className="graphs-container">
-            <div className="charts-container"></div>
+            <div className="charts-container">
+              <BarChart />
+            </div>
             <div className="small-graphs-container">
               <GraphBox id="line-chart">
                 <LineChart />

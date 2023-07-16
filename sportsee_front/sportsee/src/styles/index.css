@@ -73,3 +73,10 @@ input {
   flex-direction: column;
   gap: 30px;
 }
+
+.charts-container {
+  background-color: #fbfbfb;
+  width: 835px;
+  height: 320px;
+  margin-bottom: 28px;
+}
