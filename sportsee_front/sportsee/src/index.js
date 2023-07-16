@@ -33,7 +33,13 @@ root.render(
           <div className="graphs-container">
             <div className="charts-container"></div>
             <div className="small-graphs-container">
-              <GraphBox>
+              <GraphBox id="line-chart">
+                <LineChart />
+              </GraphBox>
+              <GraphBox id="line-chart">
+                <LineChart />
+              </GraphBox>
+              <GraphBox id="line-chart">
                 <LineChart />
               </GraphBox>
             </div>

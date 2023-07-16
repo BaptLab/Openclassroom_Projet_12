@@ -1,0 +1,23 @@
+#line-chart-box {
+  background-color: red;
+}
+
+.domain {
+  display: none;
+}
+
+.tick line {
+  display: none;
+}
+
+.tick text {
+  font-size: 1.25em;
+  font-weight: 500;
+  color: white;
+  opacity: 40%;
+  line-height: 24px;
+}
+
+#line {
+  opacity: 40%;
+}
