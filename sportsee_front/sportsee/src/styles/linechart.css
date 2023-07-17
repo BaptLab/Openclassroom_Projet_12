@@ -2,15 +2,15 @@
   background-color: red;
 }
 
-.domain {
+#line-chart-box .domain {
   display: none;
 }
 
-.tick line {
+#line-chart-box .tick line {
   display: none;
 }
 
-.tick text {
+#line-chart-box .tick text {
   font-size: 1.25em;
   font-weight: 500;
   color: white;
@@ -18,6 +18,6 @@
   line-height: 24px;
 }
 
-#line {
+#line-chart-box #line {
   opacity: 40%;
 }

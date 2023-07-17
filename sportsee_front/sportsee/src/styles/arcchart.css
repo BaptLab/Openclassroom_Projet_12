@@ -1,0 +1,46 @@
+#arc-chart-box {
+  background-color: #fbfbfb;
+}
+
+#arc-chart-box #arc-line {
+  fill: red;
+}
+
+#arc-chart-box #arc-inside {
+  fill: white;
+}
+
+.arc-chart-container {
+  position: relative;
+}
+
+.score-title {
+  position: absolute;
+  top: 24px;
+  left: 30px;
+  font-size: 0.938em;
+  font-weight: 500;
+}
+
+.goal-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.pourcent {
+  font-size: 1.625em;
+  font-weight: 700;
+  color: #282d30;
+}
+
+.subtext-pourcent {
+  margin-top: 3px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #74798c;
+}

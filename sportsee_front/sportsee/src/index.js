@@ -16,6 +16,8 @@ import { ReactComponent as ProteinIcon } from "./assets/nutritions-icons/protein
 import GraphBox from "./components/GraphBox";
 import LineChart from "./components/LineChart";
 import BarChart from "./components/BarChart";
+import ArcChart from "./components/ArcChart";
+import RadarChart from "./components/RadarChart";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -39,11 +41,11 @@ root.render(
               <GraphBox id="line-chart">
                 <LineChart />
               </GraphBox>
-              <GraphBox id="line-chart">
-                <LineChart />
+              <GraphBox id="radar-chart">
+                <RadarChart />
               </GraphBox>
-              <GraphBox id="line-chart">
-                <LineChart />
+              <GraphBox id="arc-chart">
+                <ArcChart />
               </GraphBox>
             </div>
             <div className="small-graphs-container"></div>
