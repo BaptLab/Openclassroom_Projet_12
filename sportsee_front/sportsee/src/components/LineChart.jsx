@@ -3,11 +3,11 @@ import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 import "../styles/linechart.css";
 
-const dayOfTheWeek = ["L", "M", "M", "J", "V", "S", "D"];
+const dayOfTheWeek = ["L", "M", "M ", "J", "V", "S", "D"];
 
 const boxWidth = 258;
 const boxHeight = 263;
-const padding = 35;
+const padding = { top: 53, left: 14, bottom: 37, right: 14 };
 
 function LineChart() {
   const svgRef = useRef(null);
@@ -17,11 +17,7 @@ function LineChart() {
 
     const xScale = d3
       .scalePoint()
-      .domain(
-        activityData.sessions.map((d) => {
-          return d.day;
-        })
-      )
+      .domain(dayOfTheWeek) // Use dayOfTheWeek array instead of activityData.sessions
       .range([20, boxWidth - 20]);
 
     console.log("xScale domain:", xScale.domain());
@@ -35,7 +31,7 @@ function LineChart() {
           return d.sessionLength;
         }),
       ])
-      .range([boxHeight - padding, padding]);
+      .range([boxHeight - padding.top, padding.top + 25]);
 
     console.log("yScale domain:", yScale.domain());
     console.log("yScale range:", yScale.range());
@@ -44,7 +40,7 @@ function LineChart() {
       .line()
       .x((d, i) => {
         console.log("x value:", d.day);
-        return xScale(d.day);
+        return xScale(dayOfTheWeek[i]); // Use dayOfTheWeek values instead of d.day
       })
       .y((d) => {
         console.log("y value:", d.sessionLength);
@@ -66,11 +62,18 @@ function LineChart() {
     svg
       .append("g")
       .attr("id", "x-axis")
-      .attr("transform", `translate(0, ${boxHeight - padding})`)
+      .attr("transform", `translate(0, ${boxHeight - padding.bottom})`)
       .call(xAxis);
   }, []);
 
-  return <svg id="line-chart-box" ref={svgRef} />;
+  return (
+    <div className="line-chart-container">
+      <h4 className="line-chart-title">
+        Durée moyenne des <br></br> sessions
+      </h4>
+      <svg id="line-chart-box" ref={svgRef} />
+    </div>
+  );
 }
 
 export default LineChart;

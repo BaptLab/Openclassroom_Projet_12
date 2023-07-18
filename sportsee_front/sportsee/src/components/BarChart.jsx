@@ -83,7 +83,10 @@ function BarChart() {
       .range([height - padding.bottom, padding.top]);
 
     //ajout de l'échelle au DOM
-    svg.append("g").call(d3.axisRight(yScale));
+    svg
+      .append("g")
+      .call(d3.axisRight(yScale))
+      .attr("transform", `translate(${width - padding.right / 1.5}, 0)`);
 
     svg
       .selectAll("myKilogramBar")
@@ -120,7 +123,38 @@ function BarChart() {
       .attr("fill", "#282D30");
   });
 
-  return <svg id="bar-chart" ref={svgRef} />;
+  return (
+    <div className="bar-chart-container">
+      <div className="bar-chart-text-container">
+        <h4 className="bar-chart-title">Activité quotidienne</h4>
+        <div className="scales-container">
+          <div id="weight" className=" scale-container scale-container-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
+            >
+              <path d="M4 8C6.20914 8 8 6.20914 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 6.20914 1.79086 8 4 8Z" />
+            </svg>
+            <span className="scale-text">{"Poids (kg)"}</span>
+          </div>
+          <div id="height" className="scale-container scale-container-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
+            >
+              <path d="M4 8C6.20914 8 8 6.20914 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 6.20914 1.79086 8 4 8Z" />
+            </svg>
+            <span className="scale-text">{"Calories brûlées (kCal)"}</span>
+          </div>
+        </div>
+      </div>
+      <svg id="bar-chart" ref={svgRef} />
+    </div>
+  );
 }
 
 export default BarChart;

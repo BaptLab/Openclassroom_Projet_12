@@ -60,6 +60,7 @@ input {
 .data-visuals-container {
   display: flex;
   gap: 30px;
+  margin-top: 77px;
 }
 
 .small-graphs-container {

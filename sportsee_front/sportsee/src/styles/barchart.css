@@ -1,1 +1,39 @@
+.bar-chart-container {
+  position: relative;
+}
 
+.bar-chart-text-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 24px;
+}
+
+.bar-chart-title {
+  font-size: 0.938em;
+  font-weight: 500;
+  color: #20253a;
+  position: absolute;
+}
+
+.scale-container {
+  margin-left: 32px;
+}
+
+.scale-text {
+  color: #74798c;
+  font-size: 0.875em;
+  font-weight: 500;
+  margin-left: 12px;
+}
+
+.scales-container {
+  display: flex;
+  position: absolute;
+  right: 32px;
+}
+
+#height path {
+  fill: red;
+}

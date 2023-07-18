@@ -55,13 +55,13 @@ root.render(
               <CalorieIcon />
             </NutritionCard>
             <NutritionCard value={userData.keyData.proteinCount} unit="Protéines">
-              <CarbsIcon />
+              <ProteinIcon />
             </NutritionCard>
             <NutritionCard value={userData.keyData.carbohydrateCount} unit="Glucides">
-              <FatIcon />
+              <CarbsIcon />
             </NutritionCard>
             <NutritionCard value={userData.keyData.lipidCount} unit="Lipides">
-              <ProteinIcon />
+              <FatIcon />
             </NutritionCard>
           </div>
         </div>

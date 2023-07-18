@@ -21,3 +21,18 @@
 #line-chart-box #line {
   opacity: 40%;
 }
+
+.line-chart-container {
+  position: relative;
+}
+
+.line-chart-title {
+  position: absolute;
+  font-size: 0.938em;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0.5;
+  top: 29px;
+  left: 34px;
+  line-height: 25px;
+}
