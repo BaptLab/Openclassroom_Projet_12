@@ -26,43 +26,47 @@ root.render(
     <div className="nav-and-dashboard">
       <Sidebar />
       <main className="dashboard-container">
-        <h2 className="greetings">
-          Bonjour <span className="greetings-name">{userData.userInfos.firstName}</span>
-        </h2>
-        <h3 className="congrats">
-          Félicitation ! Vous avez explosé vos objectif hier 👏
-        </h3>
-        <div className="data-visuals-container">
-          <div className="graphs-container">
-            <div className="charts-container">
-              <BarChart />
+        <div className="dashboard-text-container">
+          <h2 className="greetings">
+            Bonjour <span className="greetings-name">{userData.userInfos.firstName}</span>
+          </h2>
+          <h3 className="congrats">
+            Félicitation ! Vous avez explosé vos objectif hier 👏
+          </h3>
+        </div>
+        <div className="dashboard-graph-container">
+          <div className="data-visuals-container">
+            <div className="graphs-container">
+              <div className="charts-container">
+                <BarChart />
+              </div>
+              <div className="small-graphs-container">
+                <GraphBox id="line-chart">
+                  <LineChart />
+                </GraphBox>
+                <GraphBox id="radar-chart">
+                  <RadarChart />
+                </GraphBox>
+                <GraphBox id="arc-chart">
+                  <ArcChart />
+                </GraphBox>
+              </div>
+              <div className="small-graphs-container"></div>
             </div>
-            <div className="small-graphs-container">
-              <GraphBox id="line-chart">
-                <LineChart />
-              </GraphBox>
-              <GraphBox id="radar-chart">
-                <RadarChart />
-              </GraphBox>
-              <GraphBox id="arc-chart">
-                <ArcChart />
-              </GraphBox>
+            <div className="nutrition-cards-container">
+              <NutritionCard value={userData.keyData.calorieCount} unit="Calories">
+                <CalorieIcon />
+              </NutritionCard>
+              <NutritionCard value={userData.keyData.proteinCount} unit="Protéines">
+                <ProteinIcon />
+              </NutritionCard>
+              <NutritionCard value={userData.keyData.carbohydrateCount} unit="Glucides">
+                <CarbsIcon />
+              </NutritionCard>
+              <NutritionCard value={userData.keyData.lipidCount} unit="Lipides">
+                <FatIcon />
+              </NutritionCard>
             </div>
-            <div className="small-graphs-container"></div>
-          </div>
-          <div className="nutrition-cards-container">
-            <NutritionCard value={userData.keyData.calorieCount} unit="Calories">
-              <CalorieIcon />
-            </NutritionCard>
-            <NutritionCard value={userData.keyData.proteinCount} unit="Protéines">
-              <ProteinIcon />
-            </NutritionCard>
-            <NutritionCard value={userData.keyData.carbohydrateCount} unit="Glucides">
-              <CarbsIcon />
-            </NutritionCard>
-            <NutritionCard value={userData.keyData.lipidCount} unit="Lipides">
-              <FatIcon />
-            </NutritionCard>
           </div>
         </div>
       </main>

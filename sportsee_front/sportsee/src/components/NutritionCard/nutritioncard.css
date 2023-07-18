@@ -5,6 +5,7 @@
   height: 124px;
   align-items: center;
   padding: 0 32px;
+  border-radius: 5px;
 }
 
 .nutritions-infos {
@@ -27,4 +28,33 @@
   font-size: 0.875em;
   font-weight: 500;
   color: #74798c;
+}
+
+@media (max-width: 1390px) {
+  .nutrition-card {
+    padding: 0 28px;
+    height: 107px;
+  }
+
+  .nutritions-infos .unit {
+    margin-top: 3px;
+    font-size: 0.7em;
+    font-weight: 500;
+    color: #74798c;
+  }
+
+  .nutritions-infos .value {
+    font-size: 1.063em;
+    font-weight: 700;
+    color: #282d30;
+  }
+
+  .icon-container {
+    margin-right: 15px;
+  }
+
+  .icon-container svg {
+    width: 56px;
+    height: 56px;
+  }
 }
