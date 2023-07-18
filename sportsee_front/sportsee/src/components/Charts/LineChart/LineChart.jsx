@@ -1,7 +1,7 @@
-import activityData from "../datas/usersession.json";
+import activityData from "../../../datas/usersession.json";
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import "../styles/linechart.css";
+import "./linechart.css";
 
 const dayOfTheWeek = ["L", "M", "M ", "J", "V", "S", "D"];
 

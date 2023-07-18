@@ -1,5 +1,5 @@
-import SidebarIcons from "./SidebarIcons";
-import "../styles/Sidebar.css";
+import SidebarIcons from "../../SideBarIcons/SidebarIcons";
+import "./sidebar.css";
 
 function Sidebar() {
   return (

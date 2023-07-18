@@ -4,20 +4,20 @@ import userData from "./datas/userdata.json";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "../src/styles/index.css";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import NutritionCard from "./components/NutritionCard";
+import Header from "./components/Layout/Header/Header";
+import Sidebar from "./components/Layout/SideBar/Sidebar";
+import NutritionCard from "./components/NutritionCard/NutritionCard";
 
 //svg import as components
 import { ReactComponent as CalorieIcon } from "./assets/nutritions-icons/calories-icon.svg";
 import { ReactComponent as CarbsIcon } from "./assets/nutritions-icons/carbs-icon.svg";
 import { ReactComponent as FatIcon } from "./assets/nutritions-icons/fat-icon.svg";
 import { ReactComponent as ProteinIcon } from "./assets/nutritions-icons/protein-icon.svg";
-import GraphBox from "./components/GraphBox";
-import LineChart from "./components/LineChart";
-import BarChart from "./components/BarChart";
-import ArcChart from "./components/ArcChart";
-import RadarChart from "./components/RadarChart";
+import GraphBox from "./components/GraphBox/GraphBox.jsx";
+import LineChart from "./components/Charts/LineChart/LineChart.jsx";
+import BarChart from "./components/Charts/BarChart/BarChart";
+import ArcChart from "./components/Charts/ArcChart/ArcChart";
+import RadarChart from "./components/Charts/RadarChart/RadarChart";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -1,4 +1,4 @@
-import "../styles/graphbox.css";
+import "./graphbox.css";
 
 function GraphBox(props) {
   return <div className="graph-box">{props.children}</div>;

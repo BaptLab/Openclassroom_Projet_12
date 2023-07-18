@@ -1,4 +1,4 @@
-import data from "../datas/userperformance.json";
+import data from "../../../datas/userperformance.json";
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 

@@ -1,4 +1,4 @@
-import "../styles/nutritioncard.css";
+import "./nutritioncard.css";
 
 function NutritionCard(props) {
   return (

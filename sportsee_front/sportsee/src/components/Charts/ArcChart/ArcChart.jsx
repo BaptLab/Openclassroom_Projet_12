@@ -1,7 +1,7 @@
-import activityData from "../datas/userdata.json";
+import activityData from "../../../datas/userdata.json";
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import "../styles/arcchart.css";
+import "./arcchart.css";
 
 const goalPourcent = activityData.todayScore * 100;
 

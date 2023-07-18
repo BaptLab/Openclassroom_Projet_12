@@ -1,9 +1,9 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import "../styles/barchart.css";
+import "./barchart.css";
 
 //Data + padding
-import activityData from "../datas/useractivity.json";
+import activityData from "../../../datas/useractivity.json";
 const calories = activityData.sessions.map((d) => {
   return d.calories;
 });

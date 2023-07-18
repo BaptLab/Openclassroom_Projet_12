@@ -1,4 +1,4 @@
-import "../styles/sidebarIcons.css";
+import "./sidebarIcons.css";
 
 function SidebarIcons(props) {
   let iconToDisplay = undefined;
