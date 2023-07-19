@@ -1,27 +1,11 @@
-import data from "../../../datas/userperformance.json";
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { useRef, useEffect } from "react";
-
-const radarData = [];
-function formatData(data) {
-  for (let i = 0; i < data.data.length; i++) {
-    radarData.push(new Axis(data.kind[i + 1], data.data[i].value));
-  }
-}
-
-class Axis {
-  constructor(kind, value) {
-    this.axis = kind;
-    this.value = value;
-  }
-}
-
-formatData(data);
+import "./radarchart.css";
+import data from "../../../datas/userperformance.json"; // Import the JSON data
 
 function RadarChart() {
   const width = 258;
   const height = 263;
-
   const radarWidth = 250;
   const axes = [
     radarWidth * 0.2,
@@ -30,8 +14,7 @@ function RadarChart() {
     radarWidth * 0.8,
     radarWidth * 1,
   ];
-
-  const padding = 20;
+  const padding = 45;
 
   const svgRef = useRef(null);
 
@@ -47,33 +30,47 @@ function RadarChart() {
       .domain([0, d3.max(axes)])
       .range([0, width / 2 - padding]);
 
-    svg
-      .selectAll("circle")
-      .data(axes)
-      .join("circle")
-      .attr("cy", height / 2)
-      .attr("cx", width / 2)
-      .attr("fill", "none")
-      .attr("stroke", "gray")
-      .attr("r", (d) => d / 2 - padding);
-
     function angleToCoordinate(angle, value) {
-      let x = Math.cos(angle) * radialScale(value);
-      let y = Math.sin(angle) * radialScale(value);
-      console.log("coodrinates", x, y);
+      const x = Math.cos(angle) * radialScale(value);
+      const y = Math.sin(angle) * radialScale(value);
       return { x: width / 2 + x, y: height / 2 - y };
     }
 
-    const angleSlice = (2 * Math.PI) / radarData.length;
+    const hexPathGenerator = d3
+      .line()
+      .x((d) => d.x)
+      .y((d) => d.y)
+      .context(null);
 
-    const featureData = radarData.map((f, i) => {
-      const angle = i * angleSlice;
-      return {
-        name: f.axis,
-        angle: angle,
-        label_coord: angleToCoordinate(angle, d3.max(axes) + padding),
-      };
+    const hexData = axes.map((axisValue, i) => {
+      const radius = radialScale(axisValue);
+      const coordinates = [];
+      for (let j = 0; j < 6; j++) {
+        const angle = (j * 2 * Math.PI) / 6;
+        coordinates.push(angleToCoordinate(angle, axisValue));
+      }
+      return { coordinates, radius };
     });
+
+    svg
+      .selectAll(".hexagon")
+      .data(hexData)
+      .join("path")
+      .attr("class", "hexagon")
+      .attr("d", (d) => hexPathGenerator(d.coordinates) + "Z")
+      .attr("stroke-width", 3)
+      .attr("stroke", "gray")
+      .attr("fill", "none")
+      .attr("stroke-opacity", 1)
+      .attr("opacity", 0.15);
+
+    const featureData = [];
+    for (let i = 0; i < 6; i++) {
+      const angle = (i * 2 * Math.PI) / 6;
+      const labelCoord = angleToCoordinate(angle, d3.max(axes) + padding * 1.2);
+      const name = data.kind[i + 1];
+      featureData.push({ name, angle, label_coord: labelCoord });
+    }
 
     svg
       .selectAll(".axislabel")
@@ -83,44 +80,29 @@ function RadarChart() {
       .attr("x", (d) => d.label_coord.x)
       .attr("y", (d) => d.label_coord.y)
       .text((d) => d.name)
-      .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
-      .style("font-size", "8px")
-      .style("font-weight", "bold");
+      .attr("text-anchor", "middle") // Center the labels on the hexagons
+      .attr("dy", "-0.1em") // Adjust vertical position for the top labels
+      .attr("dx", "-0.2em"); // Adjust vertical position for the top labels
 
-    let line = d3
-      .line()
-      .x((d) => d.x)
-      .y((d) => d.y);
+    const area = d3
+      .areaRadial()
+      .angle((d, i) => (i * 2 * Math.PI) / 6) // Use exact angles for the data points
+      .radius((d) => radialScale(d.value))
+      .curve(d3.curveLinearClosed);
 
-    function getPathCoordinates(data_point) {
-      console.log("data", data_point);
-      let coordinates = [];
-      for (var i = 0; i <= axes.length; i++) {
-        let ft_name = i;
-        let angle = Math.PI / 2 + (2 * Math.PI * i) / axes.length;
-        console.log("angel : ", angle, ft_name, data_point[ft_name]);
-        coordinates.push(angleToCoordinate(angle, data_point[ft_name].value));
-      }
-      console.log("coordinates", coordinates);
-      return coordinates;
-    }
+    const pathCoordinates = data.data.map((d) => {
+      const angle = ((d.kind - 1) * (2 * Math.PI)) / 6;
+      return angleToCoordinate(angle, d.value);
+    });
 
     svg
-      .selectAll("path")
-      .data(radarData)
-      .join((enter) =>
-        enter
-          .append("path")
-          .datum(getPathCoordinates(radarData))
-          .attr("d", line)
-          .attr("stroke-width", 3)
-          .attr("stroke", (_, i) => "none")
-          .attr("fill", (_, i) => "red")
-          .attr("stroke-opacity", 1)
-          .attr("opacity", 0.15)
-      );
-  }, [axes]);
+      .append("polygon")
+      .attr("points", pathCoordinates.map((d) => `${d.x},${d.y}`).join(" "))
+      .attr("class", "data-area")
+      .attr("fill", "rgba(100, 149, 237, 0.7)")
+      .attr("stroke", "rgba(100, 149, 237, 1)")
+      .attr("stroke-width", 2);
+  }, [axes, data.kind, data.data]);
 
   return <svg ref={svgRef} id="radar-chart"></svg>;
 }

@@ -1,0 +1,21 @@
+#radar-chart {
+  background-color: #282d30;
+}
+
+#radar-chart .axislabel {
+  font-size: 12px;
+  font-weight: 500;
+  fill: white;
+}
+
+#radar-chart path {
+  stroke: white;
+  stroke-width: 1px;
+  opacity: 1;
+}
+
+#radar-chart polygon {
+  fill: red;
+  stroke: none;
+  opacity: 0.45;
+}
