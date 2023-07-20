@@ -1,0 +1,44 @@
+.btn-container {
+  background-color: white;
+
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+}
+
+.user-name {
+  width: 200px;
+}
+
+/* CSS */
+.user-btn-container {
+  text-decoration: none;
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: arial, sans-serif;
+  font-size: 14px;
+  height: 36px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 16px;
+  padding-top: 5px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: pre;
+}
+
+.user-btn-container:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 1px;
+  color: #202124;
+}
+
+.user-btn-container:focus {
+  border-color: #4285f4;
+  outline: none;
+}
