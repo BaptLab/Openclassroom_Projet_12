@@ -1,17 +1,19 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 import "./arcchart.css";
+import PropTypes from "prop-types";
+
+ArcChart.propTypes = {
+  data: PropTypes.number.isRequired,
+};
 
 function ArcChart(props) {
   useEffect(() => {
-    const data = props.data.score;
-    console.log(props.data);
     const width = 258;
     const height = 263;
     const margin = 40;
     const radius = Math.min(width, height) / 2 - margin;
     const pathWidth = 11;
-    console.log(data, radius);
 
     const svg = d3.select(svgRef.current).attr("viewBox", `0 0 ${width} ${height}`);
 
@@ -20,7 +22,7 @@ function ArcChart(props) {
       .innerRadius(radius - pathWidth)
       .outerRadius(radius)
       .startAngle(0)
-      .endAngle((2 * Math.PI * data) / 1)
+      .endAngle((2 * Math.PI * props.data) / 1)
       .cornerRadius(20); // Calculate the angle based on the data value
 
     const insidePie = d3
@@ -44,7 +46,7 @@ function ArcChart(props) {
   }, []);
 
   const svgRef = useRef(null);
-  const goalPourcent = props.data.score * 100;
+  const goalPourcent = props.data * 100;
 
   return (
     <div className="arc-chart-container">

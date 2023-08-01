@@ -1,11 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import "./radarchart.css";
+import PropTypes from "prop-types";
+
+RadarChart.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 function RadarChart(props) {
   const width = 258;
   const height = 263;
   const radarWidth = 250;
+
   const axes = [
     radarWidth * 0.2,
     radarWidth * 0.4,

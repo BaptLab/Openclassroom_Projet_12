@@ -1,14 +1,19 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 import "./barchart.css";
+import PropTypes from "prop-types";
+
+BarChart.propTypes = {
+  data: PropTypes.array.isRequired,
+};
 
 function BarChart(props) {
   // Data + padding
 
-  const calories = props.data.sessions.map((d) => {
+  const calories = props.data.map((d) => {
     return d.calories;
   });
-  const kilograms = props.data.sessions.map((d) => {
+  const kilograms = props.data.map((d) => {
     return d.kilogram;
   });
   const xAxisValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

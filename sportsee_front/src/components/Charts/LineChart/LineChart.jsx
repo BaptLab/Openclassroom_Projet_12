@@ -1,10 +1,13 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 import "./linechart.css";
+import Proptypes from "prop-types";
+
+LineChart.propTypes = {
+  data: Proptypes.array.isRequired,
+};
 
 function LineChart(props) {
-  console.log(props.data);
-
   const dayOfTheWeek = ["L", "M", " M", "J", "V", "S", "D"];
 
   const boxWidth = 258;
@@ -26,7 +29,7 @@ function LineChart(props) {
       .scaleLinear()
       .domain([
         0,
-        d3.max(props.data.sessions, function (d) {
+        d3.max(props.data, function (d) {
           return d.sessionLength;
         }),
       ])
@@ -40,7 +43,7 @@ function LineChart(props) {
 
     const path = svg
       .append("path")
-      .datum(props.data.sessions)
+      .datum(props.data)
       .attr("fill", "none")
       .attr("stroke", "white")
       .attr("stroke-width", 2)
@@ -71,7 +74,7 @@ function LineChart(props) {
       .style("color", "black")
       .style("font-size", "8px");
 
-    const points = circlesContainer.selectAll(".line-point").data(props.data.sessions);
+    const points = circlesContainer.selectAll(".line-point").data(props.data);
 
     points
       .enter()
