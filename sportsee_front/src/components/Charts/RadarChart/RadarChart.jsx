@@ -4,7 +4,7 @@ import "./radarchart.css";
 import PropTypes from "prop-types";
 
 RadarChart.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 function RadarChart(props) {
@@ -78,7 +78,7 @@ function RadarChart(props) {
     for (let i = 0; i < 6; i++) {
       const angle = (i * 2 * Math.PI) / 6;
       const labelCoord = angleToCoordinate(angle, d3.max(axes) + padding * 1.2);
-      const name = props.data.kind[i + 1];
+      const name = props.data[i].kind;
       featureData.push({ name, angle, label_coord: labelCoord });
     }
 
@@ -100,8 +100,8 @@ function RadarChart(props) {
       .radius((d) => radialScale(d.value))
       .curve(d3.curveLinearClosed);
 
-    const pathCoordinates = props.data.data.map((d) => {
-      const angle = ((d.kind - 1) * (2 * Math.PI)) / 6;
+    const pathCoordinates = props.data.map((d, key) => {
+      const angle = (key * (2 * Math.PI)) / 6;
       return angleToCoordinate(angle, d.value);
     });
 

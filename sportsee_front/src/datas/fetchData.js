@@ -2,6 +2,53 @@ import { useEffect, useState } from "react";
 // Import mock data
 import mockdata from "./mockapi/mockdata";
 
+//User class modelisation
+//All the data of the user are accessible at the same place --> userX.data
+class User {
+  constructor(data) {
+    this.userId = data.userId;
+    this.firstName = data.userInfos.firstName;
+    this.lastName = data.userInfos.lastName;
+    this.age = data.userInfos.age;
+    this.todayScore = data.todayScore;
+    this.calorieCount = data.keyData.calorieCount;
+    this.proteinCount = data.keyData.proteinCount;
+    this.carbohydrateCount = data.keyData.carbohydrateCount;
+    this.lipidCount = data.keyData.lipidCount;
+    this.activitySessions = [];
+    this.averageSessions = [];
+    this.performanceData = [];
+  }
+
+  addActivityData(activityData) {
+    this.activitySessions = activityData.sessions;
+  }
+
+  addAverageSessionData(averageSession) {
+    this.averageSessions = averageSession.sessions;
+  }
+
+  addPerformanceData(performanceData) {
+    performanceData.data.forEach((item) => {
+      const kindKey = performanceData.kind[item.kind];
+      if (kindKey) {
+        this.performanceData.push({ kind: kindKey, value: item.value });
+      }
+    });
+  }
+}
+
+function formatUserData(userData, activityData, perfData, sessionsData) {
+  //most of the infos comes from USER_MAIN_DATA (userData here)
+  const user = new User(userData);
+  //adding the missing data (activity, average and performance)
+  //We use the methods we created in the User object above
+  user.addActivityData(activityData);
+  user.addAverageSessionData(sessionsData);
+  user.addPerformanceData(perfData);
+  return user;
+}
+
 //API data retrieving function
 async function retrieveAllData(dataType, id) {
   let response;
@@ -57,13 +104,14 @@ async function retrieveMockData(dataType, id) {
 export default function useFetch(id) {
   //both loading and data state are being updated during the retrieving which allow do dynamically update the DOM
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  let [user, setUser] = useState(null);
 
   //useEffect hook to update dynamically the DOM if the ID changes
   useEffect(() => {
     async function fetchData() {
       //Depending on the .env file value, data is being retrieved from the API or a local file (mockdata)
       if (process.env.REACT_APP_API_FETCH === "TRUE") {
+        console.log("You are fetching data from the API");
         //API retrieving
         try {
           let userData = await retrieveAllData("userData", id);
@@ -74,8 +122,12 @@ export default function useFetch(id) {
           perfData = perfData.data;
           let sessionsData = await retrieveAllData("sessionsData", id);
           sessionsData = sessionsData.data;
+
+          //We create un new User according to the data we fetched and we name it according to his ID
+          const user = formatUserData(userData, activityData, perfData, sessionsData);
+
           //once retrieved, we set the data to the response of the fetch API
-          setData({ userData, activityData, perfData, sessionsData });
+          setUser(user);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -83,12 +135,14 @@ export default function useFetch(id) {
         }
       } else {
         //Mockdata retrieving
+        console.log("You are fetching data from the MockAPI");
         try {
           let userData = await retrieveMockData("userData", id);
           let activityData = await retrieveMockData("acivityData", id);
           let perfData = await retrieveMockData("performancesData", id);
           let sessionsData = await retrieveMockData("sessionsData", id);
-          setData({ userData, activityData, perfData, sessionsData });
+          user = formatUserData(userData, activityData, perfData, sessionsData);
+          setUser(user);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -99,5 +153,5 @@ export default function useFetch(id) {
 
     fetchData();
   }, [id]);
-  return { loading, data };
+  return { loading, user };
 }

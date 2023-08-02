@@ -27,30 +27,22 @@ import { ReactComponent as ProteinIcon } from "../../../assets/nutritions-icons/
 
 function Dashboard() {
   //retrieving the id passed in the URL to display the corresponding data
+
   let params = new URL(document.location).searchParams;
   let id = params.get("id");
 
   //Data being retrieved by the useFetch function (check this function for all the data related manipulation)
   //Which data to use (mock or API) is being decided in this function
-  const { loading, data } = useFetch(id);
+  const { loading, user } = useFetch(id);
 
   //Loading message
   if (loading) {
     return <div>Loading...</div>; // Display a loading indicator while data is being fetched
   }
   //Error message if no data
-  if (!data || !data.userData) {
+  if (!user) {
     return <div>No data available for the given user.</div>;
   }
-
-  // Destructure the individual data from the 'data' object
-  const { userData, activityData, perfData, sessionsData } = data;
-
-  //Data formating fro practicity purposes
-  const arcData = userData.todayScore;
-  const lineData = sessionsData.sessions;
-  const barData = activityData.sessions;
-  const radarData = perfData;
 
   return (
     <React.StrictMode>
@@ -60,8 +52,7 @@ function Dashboard() {
         <main className="dashboard-container">
           <div className="dashboard-text-container">
             <h2 className="greetings">
-              Bonjour{" "}
-              <span className="greetings-name">{userData.userInfos.firstName}</span>
+              Bonjour <span className="greetings-name">{user.firstName}</span>
             </h2>
             <h3 className="congrats">
               Félicitation ! Vous avez explosé vos objectif hier 👏
@@ -71,32 +62,32 @@ function Dashboard() {
             <div className="data-visuals-container">
               <div className="graphs-container">
                 <div className="charts-container">
-                  <BarChart data={barData} />
+                  <BarChart data={user.activitySessions} />
                 </div>
                 <div className="small-graphs-container">
                   <GraphBox id="line-chart">
-                    <LineChart data={lineData} />
+                    <LineChart data={user.averageSessions} />
                   </GraphBox>
                   <GraphBox id="radar-chart">
-                    <RadarChart data={radarData} />
+                    <RadarChart data={user.performanceData} />
                   </GraphBox>
                   <GraphBox id="arc-chart">
-                    <ArcChart data={arcData} />
+                    <ArcChart data={user.todayScore} />
                   </GraphBox>
                 </div>
                 <div className="small-graphs-container"></div>
               </div>
               <div className="nutrition-cards-container">
-                <NutritionCard value={userData.keyData.calorieCount} unit="Calories">
+                <NutritionCard value={user.calorieCount} unit="Calories">
                   <CalorieIcon />
                 </NutritionCard>
-                <NutritionCard value={userData.keyData.proteinCount} unit="Protéines">
+                <NutritionCard value={user.proteinCount} unit="Protéines">
                   <ProteinIcon />
                 </NutritionCard>
-                <NutritionCard value={userData.keyData.carbohydrateCount} unit="Glucides">
+                <NutritionCard value={user.carbohydrateCount} unit="Glucides">
                   <CarbsIcon />
                 </NutritionCard>
-                <NutritionCard value={userData.keyData.lipidCount} unit="Lipides">
+                <NutritionCard value={user.lipidCount} unit="Lipides">
                   <FatIcon />
                 </NutritionCard>
               </div>
