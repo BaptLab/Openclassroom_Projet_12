@@ -41,6 +41,7 @@ function LineChart(props) {
       .y((d) => yScale(d.sessionLength))
       .curve(d3.curveBasis);
 
+    //the path is defind according to the data points
     const path = svg
       .append("path")
       .datum(props.data)
@@ -50,11 +51,9 @@ function LineChart(props) {
       .attr("id", "line")
       .attr("d", line);
 
-    // Move the invisible circles to the end of the SVG, so they are drawn on top of the line
+    //circles = dots on the line
     const circlesContainer = svg.append("g").attr("id", "circles-container");
-
-    const pathLength = path.node().getTotalLength(); // Get the total length of the path
-
+    const pathLength = path.node().getTotalLength();
     const xAxis = d3.axisBottom(xScale);
 
     svg
@@ -63,7 +62,7 @@ function LineChart(props) {
       .attr("transform", `translate(0, ${boxHeight - padding.bottom})`)
       .call(xAxis);
 
-    // Tooltip
+    // overlay
     const tooltip = d3
       .select("body") // Attach the tooltip to the body element
       .append("div")
@@ -76,6 +75,7 @@ function LineChart(props) {
 
     const points = circlesContainer.selectAll(".line-point").data(props.data);
 
+    //invisible dots but displayed when overed - also display the overlay
     points
       .enter()
       .append("circle")
@@ -110,7 +110,7 @@ function LineChart(props) {
         d3.select(this).attr("fill-opacity", 0); // Set the opacity back to 0 on mouseout
         tooltip.style("visibility", "hidden");
       });
-  }, []);
+  }, [dayOfTheWeek, dotOffset, props.data, padding.bottom, padding.top]);
 
   return (
     <div className="line-chart-container">

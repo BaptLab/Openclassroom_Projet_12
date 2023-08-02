@@ -1,4 +1,3 @@
-import UserBtn from "../../Buttons/UserBtn";
 import SidebarIcons from "../../SideBarIcons/SidebarIcons";
 import "./sidebar.css";
 

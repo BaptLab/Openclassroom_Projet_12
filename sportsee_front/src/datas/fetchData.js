@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-// Import mock data directly
-import mockdata from "./mockapi/mockdata.json";
+// Import mock data
+import mockdata from "./mockapi/mockdata";
 
+//API data retrieving function
 async function retrieveAllData(dataType, id) {
   let response;
   switch (dataType) {
@@ -24,10 +25,9 @@ async function retrieveAllData(dataType, id) {
   return data;
 }
 
-//MOCKAPI
-
+//MOCKDATA retrieving function
 async function retrieveMockData(dataType, id) {
-  // No need for fetch calls here, directly return the corresponding mock data
+  //According to the data we need, the mockdata is being filtered
   switch (dataType) {
     case "userData":
       const userDataMock = mockdata.USER_MAIN_DATA.filter(
@@ -38,7 +38,6 @@ async function retrieveMockData(dataType, id) {
       const performancesDataMock = mockdata.USER_PERFORMANCE.filter(
         (e) => e.userId === parseInt(id)
       );
-
       return performancesDataMock[0];
     case "sessionsData":
       const sessionsDataMock = mockdata.USER_AVERAGE_SESSIONS.filter(
@@ -56,12 +55,16 @@ async function retrieveMockData(dataType, id) {
 }
 
 export default function useFetch(id) {
+  //both loading and data state are being updated during the retrieving which allow do dynamically update the DOM
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
+  //useEffect hook to update dynamically the DOM if the ID changes
   useEffect(() => {
     async function fetchData() {
+      //Depending on the .env file value, data is being retrieved from the API or a local file (mockdata)
       if (process.env.REACT_APP_API_FETCH === "TRUE") {
+        //API retrieving
         try {
           let userData = await retrieveAllData("userData", id);
           userData = userData.data;
@@ -71,6 +74,7 @@ export default function useFetch(id) {
           perfData = perfData.data;
           let sessionsData = await retrieveAllData("sessionsData", id);
           sessionsData = sessionsData.data;
+          //once retrieved, we set the data to the response of the fetch API
           setData({ userData, activityData, perfData, sessionsData });
           setLoading(false);
         } catch (error) {
@@ -78,6 +82,7 @@ export default function useFetch(id) {
           setLoading(false);
         }
       } else {
+        //Mockdata retrieving
         try {
           let userData = await retrieveMockData("userData", id);
           let activityData = await retrieveMockData("acivityData", id);

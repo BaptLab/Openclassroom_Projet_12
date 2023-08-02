@@ -8,49 +8,56 @@ BarChart.propTypes = {
 };
 
 function BarChart(props) {
-  // Data + padding
-
+  //Dividing the two type of data : calories and kilograms
   const calories = props.data.map((d) => {
     return d.calories;
   });
   const kilograms = props.data.map((d) => {
     return d.kilogram;
   });
+
+  //creating an array for the x-axis values
   const xAxisValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+  //size of the graph
   const width = 835;
   const height = 320;
   const padding = { top: 112, right: 90, bottom: 63, left: 43 };
+
   const svgRef = useRef(null);
 
   useEffect(() => {
-    // Création du conteneur de graph
     const svg = d3
       .select(svgRef.current)
       .attr("height", height)
       .attr("width", width)
       .attr("viewBox", `0 0 ${width} ${height}`);
 
-    // Scale abscisse
-    // Scale abscisse
+    // Scale x-axis = KILOGRAMS
     const xScale = d3
+      //scaleband = spaced evenly according to the number of data (roughly speaking)
       .scaleBand()
+      //domain = data being traited (in our case, all the data from the array)
       .domain(xAxisValues.slice(0, kilograms.length))
+      //range = size of the scale
       .range([padding.left, width - padding.right])
-      .padding(0.2); // Set the padding to zero
+      .padding(0.2);
 
-    // Ajout de l'échelle
+    //Display of the x-axis scale
     svg
       .append("g")
       .attr("class", "scalegroup")
       .attr("transform", "translate(0," + (height - padding.bottom / 2) + ")")
       .call(d3.axisBottom(xScale).tickSize(0))
       .selectAll("text")
+      //adjusting the position
       .attr("transform", "translate(0,-18)");
 
-    // Scale ordonnées
+    // Scale y-axis = KILOGRAMS
     const yScale = d3
+      //scaleLinear = spaced according to the value of the data
       .scaleLinear()
+      //display only the (max value) to (max value-7), can be adjust if the values are really diffrents
       .domain([
         d3.max(
           kilograms.map((d) => {
@@ -65,8 +72,10 @@ function BarChart(props) {
       ])
       .range([height - padding.bottom, padding.top]);
 
-    // 2nd scale abscisse
-    const subxScale = d3
+    // 2nd scale x-axis = CALORIES
+    //useless according to the mockup but there if needed
+
+    /* const subxScale = d3
       .scaleBand()
       .domain(
         calories.map((d) => {
@@ -74,8 +83,9 @@ function BarChart(props) {
         })
       )
       .range([padding.left, xScale.bandwidth()])
-      .padding([0.2]);
+      .padding([0.2]); */
 
+    // 2nd scale y-axis = CALORIES
     const subyScale = d3
       .scaleLinear()
       .domain([
@@ -90,21 +100,21 @@ function BarChart(props) {
       ])
       .range([height - padding.bottom, padding.top]);
 
-    // Ajout de l'échelle au DOM
-
+    // Display of the Kilogram Y-scale on the right side
     svg
       .append("g")
       .attr("class", "scalegroup")
       .call(d3.axisRight(yScale).ticks(3))
       .attr("transform", `translate(${width - padding.right / 1.5}, 0)`);
 
+    //Creation of the Bar plots (kilograms bars)
     svg
-      .selectAll(".kilogram-bar") // Select by class name
+      .selectAll(".kilogram-bar")
       .data(kilograms)
       .enter()
       .append("rect")
       .attr("x", (_, i) => xScale(i + 1))
-      .attr("class", "red-bar bar kilogram-bar") // Added unique class name
+      .attr("class", "red-bar bar kilogram-bar")
       .attr("transform", "translate(28,0)")
       .attr("y", function (d) {
         return yScale(d);
@@ -117,13 +127,14 @@ function BarChart(props) {
       })
       .attr("fill", "#282D30");
 
+    //Creation of the Bar plots (Calories bars)
     svg
-      .selectAll(".calorie-bar") // Select by class name
+      .selectAll(".calorie-bar")
       .data(calories)
       .enter()
       .append("rect")
       .attr("x", (_, i) => xScale(i + 1))
-      .attr("class", "blue-bar bar calorie-bar") // Added unique class name
+      .attr("class", "blue-bar bar calorie-bar")
       .attr("transform", "translate(42,0)")
       .attr("y", function (d) {
         return subyScale(d);
@@ -135,19 +146,21 @@ function BarChart(props) {
       })
       .attr("fill", "#E60000");
 
+    //Adding the overlay when hovered with the mouse
     const tooltip = d3
-      .select("body") // Attach the tooltip to the body element
+      .select("body")
       .append("div")
-      .style("position", "absolute") // Use absolute positioning for proper placement
+      .style("position", "absolute")
       .style("visibility", "hidden")
-      .style("background-color", "red") // Set the background color to red
+      .style("background-color", "red")
       .style("padding", "8px 7px")
-      .style("color", "white") // Set the text color to white
+      .style("color", "white")
       .style("font-size", "8px");
 
+    //size of the bar plots and positioning
     const bandwidthGroups = svg
       .selectAll(".bandwidth-group")
-      .data(kilograms) // Use kilograms data (you can also use calories data if needed)
+      .data(kilograms)
       .enter()
       .append("g")
       .attr("class", "bandwidth-group")
@@ -173,8 +186,6 @@ function BarChart(props) {
         d3.select(this).select(".background-rect").style("fill", "rgba(0, 0, 0, 0)");
       });
 
-    // ... (The existing code for the chart elements and interaction remains unchanged)
-
     // Darken each bandwidth area when hovering over it
     bandwidthGroups
       .on("mouseover", function (event, d, i) {
@@ -185,7 +196,7 @@ function BarChart(props) {
         const mouseY = event.pageY;
         tooltip.style("left", mouseX + 15 + "px");
         tooltip.style("top", mouseY - 30 + "px");
-        tooltip.html(`Kilograms: ${d}<br>Calories: ${calories[this.id]}`); // Separate kilograms and calories with <br> for a new line
+        tooltip.html(`Kilograms: ${d}<br>Calories: ${calories[this.id]}`);
       })
       .on("mouseout", function () {
         d3.select(this).select(".background-rect").style("fill", "rgba(0, 0, 0, 0)");
@@ -193,7 +204,15 @@ function BarChart(props) {
         // Hide the tooltip on mouseout
         tooltip.style("visibility", "hidden");
       });
-  }, [calories, kilograms]);
+  }, [
+    calories,
+    kilograms,
+    padding.left,
+    padding.right,
+    padding.top,
+    padding.bottom,
+    xAxisValues,
+  ]);
 
   return (
     <div className="bar-chart-container">

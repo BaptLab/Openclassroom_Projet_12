@@ -8,7 +8,8 @@ function Routing() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/user" element={<Dashboard />} /> {/* Correct the URL format here */}
+        {/* the id of the user is being passed in the login component and being retrieved in the dashboard component*/}
+        <Route path="/user" element={<Dashboard />} />
       </Routes>
     </Router>
   );

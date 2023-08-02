@@ -1,4 +1,10 @@
 import "./nutritioncard.css";
+import PropType from "prop-types";
+
+NutritionCard.propTypes = {
+  unit: PropType.string.isRequired,
+  value: PropType.number.isRequired,
+};
 
 function NutritionCard(props) {
   return (

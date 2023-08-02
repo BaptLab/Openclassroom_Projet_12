@@ -12,6 +12,9 @@ function RadarChart(props) {
   const height = 263;
   const radarWidth = 250;
 
+  const padding = 45;
+
+  //defining the 5 hexagon of the radar chart, each on is 20% further of the center of the svg
   const axes = [
     radarWidth * 0.2,
     radarWidth * 0.4,
@@ -19,7 +22,6 @@ function RadarChart(props) {
     radarWidth * 0.8,
     radarWidth * 1,
   ];
-  const padding = 45;
 
   const svgRef = useRef(null);
 
@@ -30,17 +32,20 @@ function RadarChart(props) {
       .attr("width", width)
       .attr("viewBox", `0 0 ${width} ${height}`);
 
+    //Scale radial
     const radialScale = d3
       .scaleLinear()
       .domain([0, d3.max(axes)])
       .range([0, width / 2 - padding]);
 
+    //calculating the coordinate of the datapoint on the hexagon
     function angleToCoordinate(angle, value) {
       const x = Math.cos(angle) * radialScale(value);
       const y = Math.sin(angle) * radialScale(value);
       return { x: width / 2 + x, y: height / 2 - y };
     }
 
+    //Generating path based on the datapoint coordinates
     const hexPathGenerator = d3
       .line()
       .x((d) => d.x)
