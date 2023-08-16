@@ -54,16 +54,18 @@ async function retrieveAllData(dataType, id) {
   let response;
   switch (dataType) {
     case "userData":
-      response = await fetch(`http://localhost:3000/user/${id}`);
+      response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}`);
       break;
     case "performancesData":
-      response = await fetch(`http://localhost:3000/user/${id}/performance`);
+      response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}/performance`);
       break;
     case "sessionsData":
-      response = await fetch(`http://localhost:3000/user/${id}/average-sessions`);
+      response = await fetch(
+        `${process.env.REACT_APP_API_URL}/user/${id}/average-sessions`
+      );
       break;
     case "acivityData":
-      response = await fetch(`http://localhost:3000/user/${id}/activity`);
+      response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}/activity`);
       break;
     default:
       return 0;
