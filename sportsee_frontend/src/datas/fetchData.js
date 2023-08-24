@@ -107,6 +107,8 @@ export default function useFetch(id) {
   //both loading and data state are being updated during the retrieving which allow do dynamically update the DOM
   const [loading, setLoading] = useState(true);
   let [user, setUser] = useState(null);
+  //state for errMsg while fetching
+  const [errMsg, setErrMsg] = useState("");
 
   //useEffect hook to update dynamically the DOM if the ID changes
   useEffect(() => {
@@ -131,8 +133,8 @@ export default function useFetch(id) {
           //once retrieved, we set the data to the response of the fetch API
           setUser(user);
           setLoading(false);
-        } catch (error) {
-          console.error("Error fetching data:", error);
+        } catch (err) {
+          setErrMsg(err.message);
           setLoading(false);
         }
       } else {
@@ -146,8 +148,8 @@ export default function useFetch(id) {
           user = formatUserData(userData, activityData, perfData, sessionsData);
           setUser(user);
           setLoading(false);
-        } catch (error) {
-          console.error("Error fetching data:", error);
+        } catch (err) {
+          setErrMsg(err.message);
           setLoading(false);
         }
       }
@@ -155,5 +157,5 @@ export default function useFetch(id) {
 
     fetchData();
   }, [id]);
-  return { loading, user };
+  return { loading, user, errMsg };
 }

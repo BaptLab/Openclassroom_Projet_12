@@ -33,7 +33,7 @@ function Dashboard() {
 
   //Data being retrieved by the useFetch function (check this function for all the data related manipulation)
   //Which data to use (mock or API) is being decided in this function
-  const { loading, user } = useFetch(id);
+  const { loading, user, errMsg } = useFetch(id);
 
   //Loading message
   if (loading) {
@@ -41,7 +41,14 @@ function Dashboard() {
   }
   //Error message if no data
   if (!user) {
-    return <div>No data available for the given user.</div>;
+    return (
+      <>
+        <span>No data available for the given user.</span>
+        <br />
+        <br />
+        <span>Cause : {errMsg}</span>
+      </>
+    );
   }
 
   return (
